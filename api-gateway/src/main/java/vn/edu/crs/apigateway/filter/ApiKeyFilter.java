@@ -2,7 +2,6 @@ package vn.edu.crs.apigateway.filter;
 
 import vn.edu.crs.apigateway.cache.ApiKeyValidationCache;
 import vn.edu.crs.apigateway.client.AuthServiceClient;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -13,11 +12,15 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class ApiKeyFilter implements GlobalFilter, Ordered {
 
     private final AuthServiceClient authServiceClient;
     private final ApiKeyValidationCache cache;
+
+    public ApiKeyFilter(AuthServiceClient authServiceClient, ApiKeyValidationCache cache) {
+        this.authServiceClient = authServiceClient;
+        this.cache = cache;
+    }
 
     // Map từ path sang scope cần có - mở rộng ở đây khi thêm route đối tác mới
     private static final String PARTNER_PATH = "/api/public/courses";
