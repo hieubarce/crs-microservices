@@ -1,5 +1,6 @@
 // path: crs-frontend/src/api/courseApi.ts
 // purpose: bo sung createCourse/updateCourse/deleteCourse, giu nguyen getCourses tu Buoi 5
+// bo sung ham lay 1 mon hoc theo id, dung de "ghep" ten mon vao danh sach dang ky
 
 import axiosClient from './axiosClient';
 import type { Course, PagedResponse, CourseFormValues } from '../types/course';
@@ -8,6 +9,10 @@ export const getCourses = (keyword?: string, page = 0, size = 10) => {
     return axiosClient.get<PagedResponse<Course>>('/api/courses', {
         params: { keyword, page, size },
     });
+};
+
+export const getCourseById = (id: number) => {
+    return axiosClient.get<Course>(`/api/courses/${id}`);
 };
 
 const toPayload = (values: CourseFormValues) => ({
